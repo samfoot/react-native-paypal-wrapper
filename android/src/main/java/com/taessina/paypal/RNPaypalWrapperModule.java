@@ -172,6 +172,8 @@ public class RNPaypalWrapperModule extends ReactContextBaseJavaModule implements
 
     Intent intent = new Intent(reactContext, PaymentActivity.class);
 
+    config.acceptCreditCards(false);
+
     // send the same configuration for restart resiliency
     intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
     intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
