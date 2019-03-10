@@ -125,7 +125,7 @@ public class RNPaypalWrapperModule extends ReactContextBaseJavaModule implements
     this.environment = environment;
     this.clientId = clientId;
 
-    config = new PayPalConfiguration().environment(environment).clientId(clientId);
+    config = new PayPalConfiguration().environment(environment).clientId(clientId).acceptCreditCards(false);
 
     Intent intent = new Intent(reactContext, PayPalService.class);
     intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
@@ -134,7 +134,7 @@ public class RNPaypalWrapperModule extends ReactContextBaseJavaModule implements
 
   @ReactMethod
   public void initializeWithOptions(String environment, String clientId, ReadableMap params) {
-    config = new PayPalConfiguration().environment(environment).clientId(clientId);
+    config = new PayPalConfiguration().environment(environment).clientId(clientId).acceptCreditCards(false);
 
     if(params.hasKey("merchantName") && params.hasKey("merchantPrivacyPolicyUri") && params.hasKey("merchantUserAgreementUri")) {
       String merchantName = params.getString("merchantName");
@@ -171,8 +171,6 @@ public class RNPaypalWrapperModule extends ReactContextBaseJavaModule implements
     payment.enablePayPalShippingAddressesRetrieval(true);
 
     Intent intent = new Intent(reactContext, PaymentActivity.class);
-
-    config.acceptCreditCards(false);
 
     // send the same configuration for restart resiliency
     intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
